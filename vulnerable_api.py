@@ -191,7 +191,8 @@ def unsafe_pickle(data):
         obj = pickle.loads(bytes.fromhex(data))
         return jsonify({"cached_data": str(obj)})
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        app.logger.exception("Failed to deserialize cache data")
+        return jsonify({"error": "Invalid cache data"}), 400
 
 
 # ========== VULNERABILIDADE 8: HARDCODED SECRETS ==========
